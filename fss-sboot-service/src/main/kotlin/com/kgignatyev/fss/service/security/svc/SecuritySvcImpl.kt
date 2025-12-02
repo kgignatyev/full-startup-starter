@@ -96,7 +96,7 @@ class SecuritySvcImpl(
         val r = HttpEntity("", headers)
         val res = restTemplate.exchange("$issuer/userinfo", HttpMethod.GET,r,String::class.java)
         val info = om.readTree(  res.body ) as ObjectNode
-        logger.debug("Received UserInfo: $info")
+        logger.debug("Received UserInfo: {}", info)
         val u = User()
         u.jwtSub = info.get("sub").asText()
         u.name = info.get("name").asText()
@@ -175,8 +175,7 @@ class SecuritySvcImpl(
         val enforcer = authorizationSvc.getEnforcerForUser(userId)
         val enforce = enforcer.enforce(userId, o, action)
         if( logger.isDebugEnabled) {
-            val currentUser = getCallerInfo().currentUser
-            logger.debug("Enforcer: $enforce - Current user: ${currentUser.id} ${currentUser.name} - Securable $o - Action: $action ")
+            logger.debug("Enforcer: $enforce - Current user id: ${userId} - Securable $o - Action: $action ")
         }
         return enforce
     }

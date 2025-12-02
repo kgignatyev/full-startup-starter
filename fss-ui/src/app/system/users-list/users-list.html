@@ -1,0 +1,21 @@
+<h2>Users</h2>
+
+<dx-data-grid #usersDataGrid
+              [dataSource]="usersDataSource"
+              keyExpr="id"
+              [remoteOperations]="true"
+              [rowAlternationEnabled]="true">
+
+  <dxo-toolbar>
+
+
+    <dxi-item>
+      <dx-button icon="refresh" (onClick)="refresh()"></dx-button>
+    </dxi-item>
+
+    <dxi-item name="exportButton"></dxi-item>
+    <dxi-item name="searchPanel"></dxi-item>
+  </dxo-toolbar>
+
+</dx-data-grid>
+

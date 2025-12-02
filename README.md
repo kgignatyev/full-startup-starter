@@ -1,8 +1,9 @@
-Full Stack Seed (FSS)
+Full Startup Starter (FSS)
 ---
 
 This is a collection of projects to bootstrap a startup ( or a project ) by providing complete and productive
-development stack that uses API first ideology
+development stack paired with methodologies like
+ API first and Executable Specifications, a.k.a ATDD (Acceptance Test Driven Development) 
 
 ![overview](full-stack-dev/docs/Full-Startup-Starter.png)
 

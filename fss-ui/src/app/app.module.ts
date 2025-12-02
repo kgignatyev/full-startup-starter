@@ -51,6 +51,7 @@ import { JobSourcesDropDownComponent } from './components/job-sources-drop-down/
 import { Workflows } from './automation/workflows/workflows';
 import { SystemInfo } from './system/system-info/system-info';
 import { Footer } from './layout/footer/footer';
+import { UsersList } from './system/users-list/users-list';
 @NgModule({ declarations: [
         AppComponent,
         CompaniesListComponent,
@@ -62,7 +63,8 @@ import { Footer } from './layout/footer/footer';
         JobSourcesDropDownComponent,
         Workflows,
         SystemInfo,
-        Footer
+        Footer,
+        UsersList
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         DxAutocompleteModule,
