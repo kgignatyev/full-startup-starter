@@ -2,8 +2,10 @@ package com.kgignatyev.fss.service.security.svc
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ObjectNode
+import com.kgignatyev.fss.service.BadRequestException
 import com.kgignatyev.fss.service.UnauthorizedException
 import com.kgignatyev.fss.service.common.data.Operation.DELETE
+import com.kgignatyev.fss.service.common.data.Operation.IMPERSONATE
 import com.kgignatyev.fss.service.common.data.Operation.UPDATE
 import com.kgignatyev.fss.service.common.events.CrudEventType
 import com.kgignatyev.fss.service.security.*
@@ -94,7 +96,7 @@ class SecuritySvcImpl(
         val r = HttpEntity("", headers)
         val res = restTemplate.exchange("$issuer/userinfo", HttpMethod.GET,r,String::class.java)
         val info = om.readTree(  res.body ) as ObjectNode
-        logger.debug("Received UserInfo: $info")
+        logger.debug("Received UserInfo: {}", info)
         val u = User()
         u.jwtSub = info.get("sub").asText()
         u.name = info.get("name").asText()
@@ -120,7 +122,19 @@ class SecuritySvcImpl(
                         userO.get()
                     }
                     val callerInfo = CallerInfo()
-                    callerInfo.currentUser = realUser
+                    val maybeImpersonate = SecurityContext.httpHeaders.get()[CallerInfo.X_IMPERSONATE]
+                    if(maybeImpersonate != null) {
+                        val userSecurable = User()
+                        userSecurable.id = maybeImpersonate
+                        if( isUserAuthorized( realUser.id , userSecurable , IMPERSONATE)){
+                            val userToImpersonate = userSvc.findById(userSecurable.id).orElseThrow{ BadRequestException("User not found")}
+                            callerInfo.currentUser = userToImpersonate
+                        }else{
+                            throw UnauthorizedException("User is not allowed to perform operation: $IMPERSONATE")
+                        }
+                    }else {
+                        callerInfo.currentUser = realUser
+                    }
                     callerInfo.realUser = realUser
                     callerInfo
                 }
@@ -161,8 +175,7 @@ class SecuritySvcImpl(
         val enforcer = authorizationSvc.getEnforcerForUser(userId)
         val enforce = enforcer.enforce(userId, o, action)
         if( logger.isDebugEnabled) {
-            val currentUser = getCallerInfo().currentUser
-            logger.debug("Enforcer: $enforce - Current user: ${currentUser.id} ${currentUser.name} - Securable $o - Action: $action ")
+            logger.debug("Enforcer: $enforce - Current user id: ${userId} - Securable $o - Action: $action ")
         }
         return enforce
     }

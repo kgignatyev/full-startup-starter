@@ -43,7 +43,10 @@ class SecuritySvcV1Impl(
 
     override fun getSecurityPoliciesForUser(userId: String): ResponseEntity<List<V1SecurityPolicy>> {
         val effectiveUserId =
-            if (userId == "my" || userId == "me") securitySvc.getCallerInfo().currentUser.id else userId
+            if (userId == "my" || userId == "me") {
+                val callerInfo = securitySvc.getCallerInfo()
+                callerInfo.currentUser.id
+            } else userId
         val policies: List<SecurityPolicy> = try {
             securitySvc.getSecurityPoliciesForUser(effectiveUserId)
         } catch (ex: Exception) {

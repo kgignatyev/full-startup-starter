@@ -75,7 +75,7 @@ interface SearchableRepo<T> {
                 builder.or( *predicates.toTypedArray())
             }
         } else {
-            Specification.where<T>(null)
+            Specification.unrestricted<T>()
         }
         val pageN = (offset / limit).toInt()
         val page: Pageable = pageableOf(pageN, limit, sortExpr)

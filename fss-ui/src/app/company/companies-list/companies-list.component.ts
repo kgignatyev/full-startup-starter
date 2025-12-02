@@ -1,29 +1,42 @@
-import { Component } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CompaniesServiceV1Service, V1Company} from "../../generated/api_client";
 import {Router} from "@angular/router";
 import {ContextService} from "../../services/context.service";
+import CustomStore from "devextreme/data/custom_store";
+import {lastValueFrom} from "rxjs";
+import {DxDataGridComponent} from "devextreme-angular";
 
 @Component({
-    selector: 'app-companies-list',
-    templateUrl: './companies-list.component.html',
-    standalone: false
+  selector: 'app-companies-list',
+  templateUrl: './companies-list.component.html',
+  standalone: false
 })
 export class CompaniesListComponent {
 
-  companies: Array<V1Company> = [];
   pageSize: number = 15;
+  companiesDataSource: CustomStore<V1Company, any>;
+
+  @ViewChild('companiesDataGrid', {static: false}) companiesDataGrid: DxDataGridComponent | undefined;
+
 
   constructor(private companiesSvc: CompaniesServiceV1Service,
-              private cxtSvc:ContextService,
+              private cxtSvc: ContextService,
               private router: Router) {
-    this.refresh();
+
+    this.companiesDataSource = new CustomStore<V1Company>({
+      key: 'id',
+      load: () => lastValueFrom(
+        this.companiesSvc.getAllCompanies(this.cxtSvc.currentAccount$.getValue())
+      ).then(result => result ?? [])
+    });
+
   }
 
 
+
   refresh() {
-    this.companiesSvc.getAllCompanies(this.cxtSvc.currentAccount$.getValue() ).subscribe(svcs => {
-      this.companies = svcs;
-    });
+    console.info('Refresh-CompaniesListComponent');
+    this.companiesDataGrid?.instance.refresh().then(d => console.info("Refreshed"))
   }
 
   newCompany() {

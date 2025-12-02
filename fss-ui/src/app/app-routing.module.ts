@@ -7,6 +7,7 @@ import {JobComponent} from "./job/job/job.component";
 import {AboutComponent} from "./system/about/about.component";
 import {Workflows} from "./automation/workflows/workflows";
 import {SystemInfo} from "./system/system-info/system-info";
+import {UsersList} from "./system/users-list/users-list";
 
 const routes: Routes = [
 
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'companies/:id', component: CompanyComponent},
   {path: 'jobs', component: JobsListComponent},
   {path: 'jobs/:id', component: JobComponent},
+  {path: 'users', component: UsersList},
   {path: 'system-info', component: SystemInfo},
   {path: 'workflows', component: Workflows},
   {path: '', component: AboutComponent},

@@ -1,7 +1,7 @@
 @test-system-management
 Feature: System management
 
-  Scenario Outline: Admin access
+  Scenario Outline: Admin impersonation ability
     Given user "admin"
     Then current user can search accounts
     And current user can impersonate normal user "<user>"

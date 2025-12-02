@@ -12,7 +12,7 @@ export class AuthzService {
   idToken$: BehaviorSubject<string|undefined> = new BehaviorSubject<string|undefined>("");
   public userAuth0$ = new BehaviorSubject<any>(null);
   // public hasAdminRole = false
-  public isAuthenticated = false;
+  // public isAuthenticated = false;
 
   private tokenClaimsSub: Subscription | undefined;
   private userSub: Subscription | undefined;
@@ -25,13 +25,7 @@ export class AuthzService {
               protected cxtSvc: ContextService) {
 
 
-    this.userAuth0$.subscribe(u => {
-      if (u) {
-        this.isAuthenticated = true
-      } else {
-        this.isAuthenticated = false
-      }
-    })
+
 
     // this.hasAdminRole$.subscribe(d => this.hasAdminRole = d)
     authService.error$.subscribe(e => {
@@ -41,8 +35,8 @@ export class AuthzService {
     })
 
     authService.isAuthenticated$.subscribe(v => {
-      this.isAuthenticated = v
-      if (this.isAuthenticated) {
+
+      if (v) {
         this.tokenClaimsSub = authService.idTokenClaims$.subscribe(t => {
           console.info("token:" + JSON.stringify(t))
           if( t ){
@@ -71,6 +65,10 @@ export class AuthzService {
       }
     });
 
+  }
+
+  isAuthenticated():boolean{
+    return this.userSignal() != null;
   }
 
   login() {

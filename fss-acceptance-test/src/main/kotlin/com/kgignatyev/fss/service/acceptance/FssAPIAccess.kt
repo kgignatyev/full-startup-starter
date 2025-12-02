@@ -12,6 +12,7 @@ import com.kgignatyev.fss_svc.api.fss_client.v1.models.V1SearchRequest
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import org.apache.commons.codec.binary.Base64
+import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
@@ -19,8 +20,21 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import java.io.File
 
+object ImpersonationHelper {
+    val impersonateUserId = ThreadLocal<String>()
+
+    fun <T>runAsUserWithId( userId: String, f:()->T ): T {
+        try{
+            impersonateUserId.set(userId)
+            return f()
+        }finally {
+            impersonateUserId.set("")
+        }
+    }
+}
+
 @Component
-class AuthorizationInterceptor(val cfg: CfgValues, val om:ObjectMapper) : Interceptor {
+class AuthenticationInterceptor(val cfg: CfgValues, val om:ObjectMapper) : Interceptor {
 
     val logger: Logger = LoggerFactory.getLogger(this.javaClass)
 
@@ -35,9 +49,13 @@ class AuthorizationInterceptor(val cfg: CfgValues, val om:ObjectMapper) : Interc
     }
 
     private fun Request.signedRequest(): Request {
-        return this.newBuilder()
+        val builder = this.newBuilder()
             .header("Authorization", "Bearer ${getToken()}")
-            .build()
+        val userIdForImpersonation = ImpersonationHelper.impersonateUserId.get()
+        if( org.springframework.util.StringUtils.hasText( userIdForImpersonation )) {
+            builder.header("X-Impersonate", userIdForImpersonation)
+        }
+        return builder.build()
     }
 
     private val tokenGuard = "TokenGuard"
@@ -118,13 +136,13 @@ class FssAPIAccess(val cfg: CfgValues) {
 
 
     @Bean
-    fun fssApiClient(authorizationInterceptor: AuthorizationInterceptor): OkHttpClient {
+    fun fssApiClient(authenticationInterceptor: AuthenticationInterceptor): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
 //            level = HttpLoggingInterceptor.Level.BODY
             level = HttpLoggingInterceptor.Level.BASIC
         }
         return OkHttpClient.Builder()
-            .addInterceptor(authorizationInterceptor)
+            .addInterceptor(authenticationInterceptor)
             .addInterceptor(loggingInterceptor)
             .build()
     }

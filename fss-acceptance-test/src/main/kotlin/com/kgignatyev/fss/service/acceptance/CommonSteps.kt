@@ -9,13 +9,12 @@ import io.cucumber.java.en.Then
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import jakarta.annotation.Resource
 import java.io.FileWriter
-import java.util.concurrent.TimeUnit
 
 
 class CommonSteps {
 
     @Resource
-    lateinit var authorizationInterceptor: AuthorizationInterceptor
+    lateinit var authenticationInterceptor: AuthenticationInterceptor
 
     @Resource
     lateinit var securityHelper: SecurityHelper
@@ -34,7 +33,7 @@ class CommonSteps {
     @Given("user {string} is logged in")
     fun user_is_logged_in(userName: String?) {
         given_user(userName)
-        val userToken = authorizationInterceptor.getToken()
+        val userToken = authenticationInterceptor.getToken()
         userToken.length shouldBeGreaterThan 10
     }
 

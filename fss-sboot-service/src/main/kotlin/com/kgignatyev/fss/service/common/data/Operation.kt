@@ -6,4 +6,5 @@ object Operation {
     const val READ = "read"
     const val UPDATE = "update"
     const val DELETE = "delete"
+    const val IMPERSONATE = "impersonate"
 }

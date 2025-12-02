@@ -15,7 +15,7 @@ export class CidAndJWTInterceptor implements HttpInterceptor {
     const cid = UUID.UUID();
     let updatedHeaders = req.headers.set('cid', cid);
     //todo:limit to valid urls
-    if( this.autzSvc.isAuthenticated ){
+    if( this.autzSvc.isAuthenticated() ){
       const authTokenObservable = this.autzSvc.authService.getAccessTokenSilently();
 
       const impersonateUserID = localStorage.getItem('impersonate_user_id')

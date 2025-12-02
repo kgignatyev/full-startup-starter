@@ -7,7 +7,8 @@ class CallerInfo {
 
     companion object {
 
-        const val X_IMPERSONATE = "X-Impersonate"
+        //headers are normalized to lowercase by infrastructure
+        const val X_IMPERSONATE = "x-impersonate"
 
         val anonymousUser = User().apply {
             id = ""

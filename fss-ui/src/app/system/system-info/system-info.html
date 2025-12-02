@@ -1,13 +1,20 @@
 <div class="row">
   <div class="col-md-12">
     <h1>System Info</h1>
-    <button (click)="refresh()">refresh</button>
   </div>
   <div class="col-md-12">
-    <dx-data-grid #jobsDataGrid
-                  [dataSource]="policies"
+    <dx-data-grid #policiesDataGrid
+                  [dataSource]="policiesDataSource"
                   keyExpr="id"
                   [rowAlternationEnabled]="true">
+      <dxo-toolbar>
+
+        <dxi-item>
+          <dx-button icon="refresh" (onClick)="refresh()"></dx-button>
+        </dxi-item>
+
+        <dxi-item name="searchPanel"></dxi-item>
+      </dxo-toolbar>
 
     </dx-data-grid>
 

@@ -714,8 +714,6 @@ components:
           description: |
             this is SQL like sort expression against properties of an object, 
              for example: 'title [asc|desc], createdAt [asc|desc]', if empty then server chooses default sort
-        status:
-          $ref: '#/components/schemas/v1.JobStatus'
         pagination:
           $ref: '#/components/schemas/v1.Pagination'
       required:

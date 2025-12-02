@@ -1,7 +1,7 @@
-<h2>companies</h2>
+<h2>Companies</h2>
 
-<dx-data-grid #companiesGrid
-              [dataSource]="companies"
+<dx-data-grid #companiesDataGrid
+              [dataSource]="companiesDataSource"
               keyExpr="id"
               [rowAlternationEnabled]="true">
   <dxo-toolbar>

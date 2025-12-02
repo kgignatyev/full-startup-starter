@@ -50,6 +50,8 @@ import { AboutComponent } from './system/about/about.component';
 import { JobSourcesDropDownComponent } from './components/job-sources-drop-down/job-sources-drop-down.component';
 import { Workflows } from './automation/workflows/workflows';
 import { SystemInfo } from './system/system-info/system-info';
+import { Footer } from './layout/footer/footer';
+import { UsersList } from './system/users-list/users-list';
 @NgModule({ declarations: [
         AppComponent,
         CompaniesListComponent,
@@ -60,7 +62,9 @@ import { SystemInfo } from './system/system-info/system-info';
         AboutComponent,
         JobSourcesDropDownComponent,
         Workflows,
-        SystemInfo
+        SystemInfo,
+        Footer,
+        UsersList
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         DxAutocompleteModule,
