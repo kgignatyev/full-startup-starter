@@ -6,6 +6,10 @@
 <div class="row">
         <div class="col-md-12">
           {{authzService.userSignal()?.name}} {{authzService.userSignal()?.email}}
+          @if (authzService.getUserToImpersonate() ){
+            impersonating user: {{ authzService.getUserToImpersonate()?.name}}
+            <dx-button (click)="stopImpersonation()">stop</dx-button>
+          }
         </div>
 </div>
 

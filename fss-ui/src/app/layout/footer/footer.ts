@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import {Router} from "@angular/router";
-import {AuthService} from "@auth0/auth0-angular";
 import {AuthzService} from "../../services/authz.service";
 
 @Component({
@@ -14,4 +12,8 @@ export class Footer {
 
   }
 
+  protected stopImpersonation() {
+    this.authzService.stopImpersonation();
+    window.location.reload();
+  }
 }

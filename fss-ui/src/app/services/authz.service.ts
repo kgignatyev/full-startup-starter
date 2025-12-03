@@ -1,9 +1,9 @@
-import {BehaviorSubject, Subscription} from "rxjs";
+import {BehaviorSubject, firstValueFrom, Subscription} from "rxjs";
 import {AuthService, User} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
 import {ContextService} from "./context.service";
 import {Injectable, signal, Signal, WritableSignal} from "@angular/core";
-import {V1User} from "../generated/api_client";
+import {SecurityServiceV1Service, V1User} from "../generated/api_client";
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +18,11 @@ export class AuthzService {
   private userSub: Subscription | undefined;
   //new useful functionality in Angular
   public userSignal :WritableSignal<User|null> = signal(null)
+  private userToImpersonate: V1User | null = null;
 
 
   constructor(public authService: AuthService, private router: Router,
-              // private membershipSvc: MemberServiceV1Service,
+               private secSvc: SecurityServiceV1Service,
               protected cxtSvc: ContextService) {
 
 
@@ -82,5 +83,21 @@ export class AuthzService {
       }
 
     });
+  }
+
+  impersonateUserById(id:string):Promise<User> {
+    this.userToImpersonate = null
+    return firstValueFrom(  this.secSvc.getUserById(id) ).then( user => {
+       this.userToImpersonate = user;
+       return user
+    })
+  }
+
+  getUserToImpersonate(): V1User|null {
+    return this.userToImpersonate;
+  }
+
+  stopImpersonation() {
+    this.userToImpersonate = null;
   }
 }

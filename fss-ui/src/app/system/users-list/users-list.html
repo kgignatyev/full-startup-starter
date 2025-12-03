@@ -16,6 +16,14 @@
     <dxi-item name="exportButton"></dxi-item>
     <dxi-item name="searchPanel"></dxi-item>
   </dxo-toolbar>
-
+  <dxi-column dataField="name" [allowFiltering]="false" cellTemplate="nameCT"></dxi-column>
+  <dxi-column dataField="email" [allowSearch]="true"></dxi-column>
+  <dxi-column cellTemplate="actionsCT" title="..."></dxi-column>
+  <div *dxTemplate="let cell of 'nameCT'">
+    <a [routerLink]="['/users', cell.data.id]">{{cell.data.name}}</a>
+  </div>
+  <div *dxTemplate="let cell of 'actionsCT'">
+    <dx-button (click)="impersonateUserById( cell.data.id)">Impersonate</dx-button>
+  </div>
 </dx-data-grid>
 
