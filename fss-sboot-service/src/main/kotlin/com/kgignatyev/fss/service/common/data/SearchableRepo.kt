@@ -29,7 +29,7 @@ interface SearchableRepo<T> {
     fun searchImpl(searchExpr: String, sortExpr:String, offset: Long, limit: Int, repo:JpaSpecificationExecutor<T>): SearchResult<T> {
         var parts = searchExpr.split(" ").map { it.trim() }
         val spec = if (parts.size >= 3) {
-            Specification.where<T> { root, query, builder ->
+            Specification { root, query, builder ->
                 val predicates = mutableListOf<Predicate>()
                 while (parts.size >= 3) {
                     val (f, op, criteria) = parts.take(3)

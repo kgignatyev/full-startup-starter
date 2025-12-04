@@ -12,6 +12,7 @@ import {lastValueFrom} from "rxjs";
 import DevExpress from "devextreme";
 import LoadOptions = DevExpress.common.data.LoadOptions;
 import {LoadResultObject} from "devextreme/common/data";
+import {AuthzService} from "../../services/authz.service";
 
 @Component({
   selector: 'app-users-list',
@@ -26,6 +27,7 @@ export class UsersList {
 
   constructor(private secSvc: SecurityServiceV1Service,
               private cxtSvc: ContextService,
+              private authService: AuthzService,
               private router: Router) {
     const cmp = this
     this.usersDataSource = new CustomStore<V1User>({
@@ -60,5 +62,11 @@ export class UsersList {
 
   refresh() {
     this.usersDataGrid?.instance.refresh().then(d => console.info("Refreshed"))
+  }
+
+  impersonateUserById(id:string) {
+    this.authService.impersonateUserById(id).then((d:any) => {
+      this.router.navigate(['']);
+    })
   }
 }
