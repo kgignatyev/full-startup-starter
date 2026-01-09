@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, effect, ViewChild} from '@angular/core';
 import DevExpress from "devextreme";
 import CustomStore from "devextreme/data/custom_store";
 import DataSource from "devextreme/data/data_source";
@@ -36,7 +36,8 @@ export class JobsListComponent {
 
 
   constructor(private jobsService: JobsServiceV1Service, private authz: AuthzService, private cxtSvc: ContextService,
-              private router: Router) {
+              private router: Router,
+              private cdr: ChangeDetectorRef) {
     this.jobsDataStore = new CustomStore({
       key: 'id',
       useDefaultSearch: true,
@@ -121,9 +122,25 @@ export class JobsListComponent {
     this.jobsDataSource = new DataSource({
       store: this.jobsDataStore,
     });
+    this.wireEffects();
+  }
+
+  wireEffects(): void {
+    const u = this.authz.userSignal();
+    if( u ){
+      this.refresh();
+    }else{}
+    effect(() => {
+      const user = this.authz.userSignal();
+      console.info("effect", user);
+      // Optional: skip work when logged out.
+      if (!user) return;
+      this.refresh();
+    });
   }
 
   refresh() {
+    console.info("refresh");
     this.jobsDataGrid?.instance.refresh().then(d => console.info("Refreshed"))
   }
 

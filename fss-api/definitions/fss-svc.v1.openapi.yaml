@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.2
 info:
   title: FSS Service API
   description: ""
@@ -107,7 +107,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/v1.Account'
+              $ref: '#/components/schemas/v1.AccountUpdateCmd'
       responses:
         '200':
           description: Updated account
@@ -269,13 +269,13 @@ paths:
                 $ref: '#/components/schemas/v1.JobEvent'
 
   /v1/jobs/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
     get:
       tags:
         - JobsServiceV1
       summary: Get a job by id
       operationId: getJobById
-      parameters:
-        - $ref: '#/components/parameters/id'
       responses:
         '200':
           description: A job
@@ -288,14 +288,12 @@ paths:
         - JobsServiceV1
       summary: Update a job by id
       operationId: updateJobById
-      parameters:
-        - $ref: '#/components/parameters/id'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/v1.Job'
+              $ref: '#/components/schemas/v1.JobUpdateCmd'
       responses:
         '200':
           description: Updated job
@@ -308,8 +306,6 @@ paths:
         - JobsServiceV1
       summary: Delete a job by id
       operationId: deleteJobById
-      parameters:
-        - $ref: '#/components/parameters/id'
       responses:
         '200':
           description: Job has been deleted
@@ -565,6 +561,15 @@ components:
         - name
         - createdAt
         - updatedAt
+
+    v1.AccountUpdateCmd:
+      type: object
+      properties:
+        name:
+          type: string
+        notes:
+          type: string
+
     v1.Account:
       type: object
       properties:
@@ -773,6 +778,29 @@ components:
       required:
         - items
         - listSummary
+
+
+    v1.JobUpdateCmd:
+      type: object
+      properties:
+        title:
+          type: string
+        companyName:
+          type: string
+        sourceId:
+          type: string
+        status:
+          $ref: '#/components/schemas/v1.JobStatus'
+        companyResponse:
+          $ref: '#/components/schemas/v1.CompanyResponse'
+        notes:
+          type: string
+        agencyName:
+          type: string
+          description: optional, name of the agency which represents you for the job
+        agentName:
+          type: string
+          description: optional, name of the recruiter at the agency
 
     v1.Job:
       type: object

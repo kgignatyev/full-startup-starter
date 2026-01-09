@@ -1,10 +1,13 @@
 package com.kgignatyev.fss.service.job
 
 import com.kgignatyev.fss.service.common.data.SearchResult
+import com.kgignatyev.fss.service.common.utils.DataUtils.assignIfNotNull
 import com.kgignatyev.fss_svc.api.fsssvc.JobsServiceV1Api
 import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1Job
 import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1JobEvent
 import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1JobListResult
+import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1JobStatus
+import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1JobUpdateCmd
 import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1SearchRequest
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -46,10 +49,33 @@ class JobsServiceV1ApiImpl(val jobsSvc: JobService,
         return ok( conv.convert(r, V1Job::class.java))
     }
 
-    override fun updateJobById(id: String, v1Job: V1Job): ResponseEntity<V1Job> {
-        val j = conv.convert( v1Job, Job::class.java)!!
+    override fun updateJobById(id: String, v1JobUpdate: V1JobUpdateCmd): ResponseEntity<V1Job> {
+        val j = jobsSvc.findById(id).get()
+        applyUpdate(j, v1JobUpdate)
         val r =  jobsSvc.save( j )
         return ok( conv.convert(r, V1Job::class.java))
+    }
+
+    private fun applyUpdate(
+        t: Job,
+        u: V1JobUpdateCmd
+    ) {
+        assignIfNotNull<Job,V1JobStatus>(t, u.status ){ cv ->
+            status = cv
+        }
+        assignIfNotNull<Job, String>(t, u.notes ){ cv ->
+            notes = cv
+        }
+        assignIfNotNull<Job, String>(t, u.sourceId ){ cv ->
+            sourceId = cv
+        }
+        assignIfNotNull<Job, String>(t, u.title ){ cv ->
+            title = cv
+        }
+        assignIfNotNull<Job, String>(t, u.companyName ){ cv ->
+            companyName = cv
+        }
+
     }
 
     override fun createJobEvent(id: String, v1JobEvent: V1JobEvent): ResponseEntity<V1JobEvent> {

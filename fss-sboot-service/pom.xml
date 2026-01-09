@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.8</version>
+        <version>3.5.9</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <name>fss Service</name>
@@ -20,14 +20,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jackson.version>2.20.1</jackson.version>
         <jackson.annotation.version>2.20</jackson.annotation.version>
-        <flyway.version>11.18.0</flyway.version>
-        <kotlin.version>2.2.21</kotlin.version>
+        <flyway.version>11.20.0</flyway.version>
+        <kotlin.version>2.3.0</kotlin.version>
         <kotlin-coroutines.version>1.10.2</kotlin-coroutines.version>
-        <modulith.version>2.0.0</modulith.version>
+<!--        <modulith.version>2.0.1</modulith.version> for springboot 4 -->
+        <modulith.version>1.4.6</modulith.version>
         <revision>1.0.0-SNAPSHOT</revision>
 <!--        <spring-security.version>5.8.7</spring-security.version>-->
         <spring-boot-run-jvm-extra></spring-boot-run-jvm-extra>
-        <temporal.version>1.32.0</temporal.version>
+        <temporal.version>1.32.1</temporal.version>
         <java.version>21</java.version>
     </properties>
 

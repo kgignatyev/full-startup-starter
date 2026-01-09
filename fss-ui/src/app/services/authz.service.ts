@@ -50,8 +50,10 @@ export class AuthzService {
           console.info("auth0_user:" + JSON.stringify(u))
           this.userAuth0$.next(u)
           if( u ){
+            console.info("userSignal:" + JSON.stringify(u))
             this.userSignal.set( u )
           }else {
+            console.info("userSignal: null")
             this.userSignal.set(null)
           }
         });

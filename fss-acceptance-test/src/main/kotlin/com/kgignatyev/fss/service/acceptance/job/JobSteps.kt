@@ -10,10 +10,15 @@ import io.kotest.matchers.date.shouldBeAfter
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.ints.shouldBeExactly
 import jakarta.annotation.Resource
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.time.OffsetDateTime
+import kotlin.math.log
 
 
 class JobSteps {
+
+    val logger: Logger = LoggerFactory.getLogger(this.javaClass)
 
     @Resource
     lateinit var jobApi: JobsServiceV1Api
@@ -36,9 +41,12 @@ class JobSteps {
     @Then("current user can update current job notes")
     fun current_user_can_update_current_job_notes() {
         val j = TestsContext.currentJob!!
-        val updatedJob = j.copy( notes = "new notes ${OffsetDateTime.now()}")
-        val jobFromServer = jobApi.updateJobById(j.id, updatedJob)
-        jobFromServer.notes shouldBeEqual updatedJob.notes
+        val updateJobCmd = V1JobUpdateCmd(
+            notes = "new notes ${OffsetDateTime.now()}"
+        )
+        logger.info("Updating job notes: ${updateJobCmd.notes}")
+        val jobFromServer = jobApi.updateJobById(j.id, updateJobCmd)
+        jobFromServer.notes shouldBeEqual updateJobCmd.notes!!
         jobFromServer.updatedAt!! shouldBeAfter j.updatedAt!!
     }
 

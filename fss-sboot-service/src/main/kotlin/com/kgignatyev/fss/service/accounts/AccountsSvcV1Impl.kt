@@ -1,9 +1,13 @@
 package com.kgignatyev.fss.service.accounts
 
 import com.kgignatyev.fss.service.common.api.APIHelpers.ofOptional
+import com.kgignatyev.fss.service.common.utils.DataUtils.assignIfNotNull
+import com.kgignatyev.fss.service.job.Job
 import com.kgignatyev.fss_svc.api.fsssvc.AccountsServiceV1Api
 import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1Account
 import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1AccountListResult
+import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1AccountUpdateCmd
+import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1JobStatus
 import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1SearchRequest
 import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1Status
 import org.springframework.core.convert.ConversionService
@@ -42,10 +46,23 @@ class AccountsSvcV1Impl( val accountsSvc: AccountsSvc, val conversionService: Co
         }
     }
 
-    override fun updateAccountById(accountId: String, v1Account: V1Account): ResponseEntity<V1Account> {
-        val a = conversionService.convert(v1Account, Account::class.java)!!
+    override fun updateAccountById(accountId: String, v1Account: V1AccountUpdateCmd): ResponseEntity<V1Account> {
+        val a = accountsSvc.findById(accountId).get()
+        applyUpdate( a, v1Account )
         val res = accountsSvc.save(a)
         return ResponseEntity.ok( conversionService.convert(res, V1Account::class.java))
+    }
+
+    private fun applyUpdate(
+        a: Account,
+        u: V1AccountUpdateCmd
+    ) {
+        assignIfNotNull<Account, String>(a, u.name ){ cv ->
+            name = cv
+        }
+        assignIfNotNull<Account, String>(a, u.notes ){ cv ->
+            notes = cv
+        }
     }
 
     override fun deleteAccountById(accountId: String): ResponseEntity<V1Status> {

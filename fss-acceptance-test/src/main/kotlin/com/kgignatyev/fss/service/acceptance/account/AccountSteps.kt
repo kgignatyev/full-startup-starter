@@ -7,6 +7,7 @@ import com.kgignatyev.fss_svc.api.fss_client.v1.apis.AccountsServiceV1Api
 import com.kgignatyev.fss_svc.api.fss_client.v1.apis.SecurityServiceV1Api
 import com.kgignatyev.fss_svc.api.fss_client.v1.infrastructure.ClientException
 import com.kgignatyev.fss_svc.api.fss_client.v1.models.V1Account
+import com.kgignatyev.fss_svc.api.fss_client.v1.models.V1AccountUpdateCmd
 import com.kgignatyev.fss_svc.api.fss_client.v1.models.V1YN
 import io.cucumber.java.PendingException
 import io.cucumber.java.en.And
@@ -89,9 +90,12 @@ class AccountSteps {
         accounts.size shouldBeExactly 1
         val account = accounts[0]
         account.name shouldBe accountName
-        val updatedAccount = account.copy(notes = "new notes ${OffsetDateTime.now()}")
-        val updatedFromServer = accountsAPI.updateAccountById(account.id, updatedAccount)
-        updatedFromServer.notes shouldBe updatedAccount.notes
+        val updateAccountCmd = V1AccountUpdateCmd(
+            name = account.name,
+            notes = "new notes ${OffsetDateTime.now()}"
+        )
+        val updatedFromServer = accountsAPI.updateAccountById(account.id, updateAccountCmd)
+        updatedFromServer.notes shouldBe updateAccountCmd.notes
     }
 
     @Then("current user can NOT see data of account {string}")
@@ -129,9 +133,12 @@ class AccountSteps {
         }
         accountsForAdmin.size shouldBeExactly 1
         val account = accountsForAdmin[0]
-        val updatedAccount = account.copy(notes = "new notes ${OffsetDateTime.now()}")
+        val updateCmd = V1AccountUpdateCmd(
+            name = account.name,
+            notes = "new notes ${OffsetDateTime.now()}"
+        )
         try {
-            accountsAPI.updateAccountById(account.id, updatedAccount)
+            accountsAPI.updateAccountById(account.id, updateCmd)
             throw Exception("Should not be able to update account $accountName")
         } catch (e: Exception) {
             when (e) {

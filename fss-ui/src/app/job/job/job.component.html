@@ -1,10 +1,10 @@
 <div class="row">
   <div class="offset-md-1 col-md-10">
-    <dx-form [(formData)]="job" #jobForm
+    <dx-form [formData]="job" #jobForm
              [colCount]="2"
              [customizeItem]="customizeJobFormItem">
       <div *dxTemplate="let data of 'jobSourceTemplate'">
-        <app-job-sources-drop-down [(jobSource)]="job.sourceId"></app-job-sources-drop-down>
+        <app-job-sources-drop-down [(jobSource)]="job!!.sourceId"></app-job-sources-drop-down>
       </div>
     </dx-form>
   </div>
@@ -22,7 +22,11 @@
 <h3>Events</h3>
 <div class="row">
   <div class="col-md-12">
-    <dx-data-grid [dataSource]="jobEvents" [showBorders]="true">
+    <dx-data-grid #eventsGrid
+                  keyExpr="id"
+                  [(dataSource)]="jobEvents"
+                  [showBorders]="true">
     </dx-data-grid>
   </div>
 </div>
+
