@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = ["/api"])
 @CrossOrigin(origins = ["*"], allowedHeaders = ["*"], methods = [RequestMethod.PATCH, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.HEAD, RequestMethod.PUT])
 @RestController
-class CompaniesServiceV1ApiImp(val companiesSvc: CompaniesService,
-                               @Qualifier("mvcConversionService") val conv:ConversionService): CompaniesServiceV1Api {
+class CompaniesServiceV1ApiImpl(val companiesSvc: CompaniesService,
+                                @Qualifier("mvcConversionService") val conv:ConversionService): CompaniesServiceV1Api {
     
 
     override fun getAllCompanies( accountId:String): ResponseEntity<List<V1Company>> {
