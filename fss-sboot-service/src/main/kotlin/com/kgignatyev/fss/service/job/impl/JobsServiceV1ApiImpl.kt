@@ -38,7 +38,6 @@ class JobsServiceV1ApiImpl(val jobsSvc: JobService,
     }
 
     override fun searchJobs(v1SearchRequest: V1SearchRequest): ResponseEntity<V1JobListResult> {
-//        logger.info("searchJobs: $v1SearchRequest")
         val r: SearchResult<Job> = jobsSvc.search(v1SearchRequest.searchExpression,v1SearchRequest.sortExpression,v1SearchRequest.pagination.offset, v1SearchRequest.pagination.limit)
         val res = V1JobListResult()
         res.items = r.items.map { conv.convert(it, V1Job::class.java)!! }
