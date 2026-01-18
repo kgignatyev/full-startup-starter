@@ -1,12 +1,12 @@
-package com.kgignatyev.fss.service.job.svc
+package com.kgignatyev.fss.service.job.impl
 
 import com.kgignatyev.fss.service.common.data.SearchResult
 import com.kgignatyev.fss.service.common.events.CrudEventType
 import com.kgignatyev.fss.service.job.JobEvent
 import com.kgignatyev.fss.service.job.JobEventEvent
 import com.kgignatyev.fss.service.job.JobEventService
-import com.kgignatyev.fss.service.job.storage.JobEventsRepo
-import com.kgignatyev.fss.service.job.storage.JobsRepo
+import com.kgignatyev.fss.service.job.impl.storage.JobEventsRepo
+import com.kgignatyev.fss.service.job.impl.storage.JobsRepo
 import com.kgignatyev.fss.service.security.SecuritySvc
 import jakarta.transaction.Transactional
 import org.springframework.context.ApplicationEventPublisher

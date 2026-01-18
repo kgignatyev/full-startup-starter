@@ -1,4 +1,4 @@
-package com.kgignatyev.fss.service.job.storage
+package com.kgignatyev.fss.service.job.impl.storage
 
 import com.kgignatyev.fss.service.job.Job
 import com.kgignatyev.fss.service.job.JobEvent

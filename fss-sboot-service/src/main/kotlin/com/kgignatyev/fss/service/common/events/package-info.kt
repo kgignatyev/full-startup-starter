@@ -1,6 +1,13 @@
-@org.springframework.lang.NonNullApi
-@org.springframework.modulith.ApplicationModule(
-        type = ApplicationModule.Type.OPEN )
-package com.kgignatyev.fss.service.common.events;
-import org.springframework.modulith.ApplicationModule;
+package com.kgignatyev.fss.service.common.events
 
+import org.springframework.modulith.ApplicationModule
+import org.springframework.modulith.NamedInterface
+import org.springframework.modulith.PackageInfo
+
+
+@ApplicationModule(
+    type = ApplicationModule.Type.OPEN
+)
+@PackageInfo
+@NamedInterface
+class ModuleMetadata {}

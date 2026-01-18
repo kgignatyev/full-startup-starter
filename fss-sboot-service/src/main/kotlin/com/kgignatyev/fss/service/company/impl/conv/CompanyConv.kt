@@ -1,4 +1,4 @@
-package com.kgignatyev.fss.service.company.conv
+package com.kgignatyev.fss.service.company.impl.conv
 
 import com.kgignatyev.fss.service.company.Company
 import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1Company

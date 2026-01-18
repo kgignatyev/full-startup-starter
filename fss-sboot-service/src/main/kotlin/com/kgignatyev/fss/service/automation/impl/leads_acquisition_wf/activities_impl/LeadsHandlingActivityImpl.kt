@@ -32,4 +32,5 @@ class LeadsHandlingActivityImpl: LeadsHandlingActivity {
     override fun matchAgainstSeekerPreferences(groupId: String) {
         logger.warn("Simulating: matching seekers preference for Group $groupId")
     }
+
 }

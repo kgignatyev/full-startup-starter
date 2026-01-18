@@ -1,10 +1,10 @@
-package com.kgignatyev.fss.service.company.svc
+package com.kgignatyev.fss.service.company.impl
 
 import com.kgignatyev.fss.service.accounts.AccountsSvc
 import com.kgignatyev.fss.service.common.data.SearchResult
 import com.kgignatyev.fss.service.company.CompaniesService
 import com.kgignatyev.fss.service.company.Company
-import com.kgignatyev.fss.service.company.storage.CompaniesRepo
+import com.kgignatyev.fss.service.company.impl.storage.CompaniesRepo
 import com.kgignatyev.fss.service.security.SecuritySvc
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.CrudRepository

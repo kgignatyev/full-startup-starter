@@ -2,11 +2,10 @@ package com.kgignatyev.fss.service.utils
 
 import com.kgignatyev.fss.service.FssService
 import com.kgignatyev.fss.service.job.Job
-import com.kgignatyev.fss.service.job.storage.JobsRepo
+import com.kgignatyev.fss.service.job.impl.storage.JobsRepo
 import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1CompanyResponse
 import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1JobStatus
 import org.apache.commons.csv.CSVFormat
-import org.apache.commons.csv.CSVParser
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringApplication

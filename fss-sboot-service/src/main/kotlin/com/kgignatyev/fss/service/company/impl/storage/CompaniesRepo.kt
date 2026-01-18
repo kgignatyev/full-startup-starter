@@ -1,4 +1,4 @@
-package com.kgignatyev.fss.service.company.storage
+package com.kgignatyev.fss.service.company.impl.storage
 
 import com.kgignatyev.fss.service.company.Company
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor

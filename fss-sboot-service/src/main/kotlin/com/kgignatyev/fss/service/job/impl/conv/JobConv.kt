@@ -1,4 +1,4 @@
-package com.kgignatyev.fss.service.job.conv
+package com.kgignatyev.fss.service.job.impl.conv
 
 import com.kgignatyev.fss.service.job.Job
 import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1Job
