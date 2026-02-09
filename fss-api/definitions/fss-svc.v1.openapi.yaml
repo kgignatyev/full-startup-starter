@@ -344,7 +344,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/v1.Company'
+              $ref: '#/components/schemas/v1.CompanyInfo'
       responses:
         '201':
           description: A new company
@@ -442,6 +442,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/v1.SecurityPolicy'
 
+
   /v1/companies/{id}:
     get:
       tags:
@@ -469,7 +470,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/v1.Company'
+              $ref: '#/components/schemas/v1.CompanyInfo'
       responses:
         '200':
           description: Updated company
@@ -685,7 +686,6 @@ components:
           $ref: '#/components/schemas/v1.YN'
         notes:
           type: string
-
       required:
         - id
         - name
@@ -693,6 +693,22 @@ components:
         - sourceId
         - banned
         - notes
+
+    v1.CompanyInfo:
+        type: object
+        properties:
+          accountId:
+            type: string
+          name:
+            type: string
+          sourceId:
+            type: string
+          banned:
+            $ref: '#/components/schemas/v1.YN'
+          notes:
+            type: string
+        required:
+          - name
 
     v1.Pagination:
       type: object

@@ -10,7 +10,6 @@ import io.temporal.spring.boot.WorkflowImpl
 import io.temporal.workflow.Workflow
 import io.temporal.workflow.WorkflowInterface
 import io.temporal.workflow.WorkflowMethod
-import org.springframework.stereotype.Service
 import java.time.Duration
 
 @WorkflowInterface

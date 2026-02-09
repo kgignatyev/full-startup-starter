@@ -1,8 +1,6 @@
 package com.kgignatyev.fss.service.acceptance.sys_management
 
-import com.auth0.json.mgmt.userAttributeProfiles.UserId
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
+
 import com.kgignatyev.fss.service.acceptance.ApiHelpers.createSearchRequest
 import com.kgignatyev.fss.service.acceptance.ImpersonationHelper
 import com.kgignatyev.fss.service.acceptance.data.CfgValues
@@ -19,6 +17,8 @@ import io.kotest.matchers.shouldBe
 import jakarta.annotation.Resource
 import org.apache.commons.io.IOUtils
 import org.junit.Assert
+import tools.jackson.databind.JsonNode
+import tools.jackson.databind.ObjectMapper
 import java.net.URI
 import java.net.URL
 import java.nio.charset.Charset
@@ -81,7 +81,7 @@ class SystemManagementSteps {
         val healthUrl = cfg.fssApiBaseUrl.replace("/api","/actuator/health")
         val healthData = om.readValue(URI.create(healthUrl).toURL().openStream(), JsonNode::class.java)
         println(healthData)
-        healthData.get("status").asText() shouldBe "UP"
+        healthData.get("status").asString() shouldBe "UP"
     }
 
     @Then( "prometheus metrics are available")

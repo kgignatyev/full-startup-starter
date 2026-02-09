@@ -23,7 +23,7 @@ class CompaniesSvcImpl(
         return searchImpl(searchExpr,sortExpr, offset, limit, _companiesRepo)
     }
 
-    override fun <S : Company?> save(company: S & Any): S & Any {
+    override fun <S : Company> save(company: S ): S {
         val a = accountsSvc.findById(company.accountId).get()
         if( company.accountId == "my") {
             company.accountId = a.id

@@ -7,24 +7,16 @@ import com.kgignatyev.fss.service.job.JobEvent
 import com.kgignatyev.fss.service.job.JobEventService
 import com.kgignatyev.fss.service.job.JobService
 import com.kgignatyev.fss_svc.api.fsssvc.JobsServiceV1Api
-import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1Job
-import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1JobEvent
-import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1JobListResult
-import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1JobStatus
-import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1JobUpdateCmd
-import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1SearchRequest
+import com.kgignatyev.fss_svc.api.fsssvc.v1.model.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.core.convert.ConversionService
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 
 @RequestMapping(path = ["/api"])
-@CrossOrigin(origins = ["*"], allowedHeaders = ["*"], methods = [RequestMethod.PATCH, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.HEAD, RequestMethod.PUT])
 @RestController
 class JobsServiceV1ApiImpl(val jobsSvc: JobService,
                            val jobEventService: JobEventService,

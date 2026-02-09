@@ -29,7 +29,7 @@ class AccountsSvcImpl( val _accountCrudRepo:AccountsRepo, val publisher: Applica
     }
 
     @Transactional
-    override fun <S : Account?> save(entity: S & Any): S & Any {
+    override fun <S : Account> save(entity: S ): S {
         securitySvc.ensureCurrentUserIsStored()
         var eventType = CrudEventType.UPDATED
         if( entity.id == "") {

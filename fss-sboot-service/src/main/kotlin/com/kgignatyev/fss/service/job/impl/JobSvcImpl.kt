@@ -4,7 +4,10 @@ import com.kgignatyev.fss.service.accounts.AccountEvent
 import com.kgignatyev.fss.service.accounts.AccountsSvc
 import com.kgignatyev.fss.service.common.data.SearchResult
 import com.kgignatyev.fss.service.common.events.CrudEventType
-import com.kgignatyev.fss.service.job.*
+import com.kgignatyev.fss.service.job.Job
+import com.kgignatyev.fss.service.job.JobEventEvent
+import com.kgignatyev.fss.service.job.JobEventService
+import com.kgignatyev.fss.service.job.JobService
 import com.kgignatyev.fss.service.job.impl.storage.JobsRepo
 import com.kgignatyev.fss.service.security.SecuritySvc
 import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1CompanyResponse
@@ -29,7 +32,7 @@ class JobSvcImpl(val _jobsRepo: JobsRepo, val jobEventService: JobEventService, 
     }
 
 
-    override fun <S : Job?> save(job: S & Any): S & Any {
+    override fun <S : Job> save(job: S ): S  {
         val a = accountsSvc.findById(job.accountId).get()
         if( job.accountId == "my") {
             job.accountId = a.id

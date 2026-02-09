@@ -6,7 +6,7 @@ import java.util.*
 
 object APIHelpers {
 
-    fun <I,O> ofOptional( v: Optional<I>, f: (I)-> O): ResponseEntity<O> {
+    fun <I:Any,O:Any> ofOptional( v: Optional<I>, f: (I)-> O): ResponseEntity<O> {
         return if (v.isEmpty){
             ResponseEntity.notFound().build()
         }else {

@@ -8,8 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class Account2API:Converter<Account, V1Account> {
-    override fun convert(source: Account): V1Account? {
-        if( source == null ) return null
+    override fun convert(source: Account): V1Account {
         val res = V1Account()
         res.id = source.id
         res.ownerId = source.ownerId
@@ -23,8 +22,7 @@ class Account2API:Converter<Account, V1Account> {
 
 @Component
 class API2Account:Converter<V1Account, Account> {
-    override fun convert(source: V1Account): Account? {
-        if( source == null ) return null
+    override fun convert(source: V1Account): Account {
         val res = Account()
         res.id = source.id
         res.name = source.name

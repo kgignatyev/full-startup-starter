@@ -11,9 +11,8 @@ import org.slf4j.LoggerFactory
 
 class HasAccessToFunction : CustomFunction() {
 
-    companion object {
-        val logger: Logger = LoggerFactory.getLogger(this.javaClass)
-    }
+    val logger: Logger = LoggerFactory.getLogger(this::class.java)
+
 
     override fun getName(): String {
         return "hasAccessTo"

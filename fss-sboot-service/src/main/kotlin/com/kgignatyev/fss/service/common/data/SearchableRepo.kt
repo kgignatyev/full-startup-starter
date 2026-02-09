@@ -22,7 +22,7 @@ data class SearchResult<T>(val items:List<T>, val summary: SearchSummary)
 
 
 
-interface SearchableRepo<T> {
+interface SearchableRepo<T: Any> {
 
     fun search(searchExpr:String, sortExpr:String, offset:Long = 0, limit:Int = 20): SearchResult<T>
 

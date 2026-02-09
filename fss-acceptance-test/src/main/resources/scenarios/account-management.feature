@@ -1,7 +1,7 @@
-
+@create-account
 Feature: Account management
 
-@create-account
+
 Scenario Outline: Create a new account
   Given user "<userName>" is logged in
   And current user does not have an account

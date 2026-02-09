@@ -1,18 +1,14 @@
 package com.kgignatyev.fss.service
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.jms.JmsAutoConfiguration
-import org.springframework.boot.autoconfigure.websocket.servlet.WebSocketMessagingAutoConfiguration
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.modulith.Modulithic
+import tools.jackson.databind.ObjectMapper
 
-@SpringBootApplication(
- exclude = [JmsAutoConfiguration::class, WebSocketMessagingAutoConfiguration::class,],
-)
+@SpringBootApplication
 @EnableJpaRepositories()
 @EnableCaching
 @Modulithic( //
