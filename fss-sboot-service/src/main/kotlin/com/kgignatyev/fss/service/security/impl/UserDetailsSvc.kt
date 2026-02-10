@@ -1,4 +1,4 @@
-package com.kgignatyev.fss.service.security.svc
+package com.kgignatyev.fss.service.security.impl
 
 import com.kgignatyev.fss.service.security.UserDetailsImpl
 import org.slf4j.Logger

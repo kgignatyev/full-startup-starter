@@ -1,7 +1,5 @@
-package com.kgignatyev.fss.service.security.svc
+package com.kgignatyev.fss.service.security.impl
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.node.ObjectNode
 import com.kgignatyev.fss.service.BadRequestException
 import com.kgignatyev.fss.service.UnauthorizedException
 import com.kgignatyev.fss.service.common.data.Operation.DELETE
@@ -22,6 +20,8 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
+import tools.jackson.databind.ObjectMapper
+import tools.jackson.databind.node.ObjectNode
 import java.util.*
 
 
@@ -38,7 +38,7 @@ class SecuritySvcImpl(
     lateinit var issuer: String
 
     @Resource
-    lateinit var om:ObjectMapper
+    lateinit var om: ObjectMapper
 
 
     @Transactional
@@ -92,20 +92,23 @@ class SecuritySvcImpl(
     fun getUserInfoFromAuth0():User{
         val restTemplate = RestTemplate()
         val headers = HttpHeaders()
-        headers.set("authorization", SecurityContext.httpHeaders.get()["authorization"]!!)
+        logger.info("Getting user info from Auth0 by thread: ${Thread.currentThread()}")
+        val authorizationHeader = SecurityContext.getHeader("authorization")
+            ?: throw IllegalStateException("Authorization header is missing")
+        headers.set("authorization", authorizationHeader)
         val r = HttpEntity("", headers)
         val res = restTemplate.exchange("$issuer/userinfo", HttpMethod.GET,r,String::class.java)
         val info = om.readTree(  res.body ) as ObjectNode
         logger.debug("Received UserInfo: {}", info)
         val u = User()
-        u.jwtSub = info.get("sub").asText()
-        u.name = info.get("name").asText()
-        u.email = info.get("email").asText()
+        u.jwtSub = info.get("sub").asString()
+        u.name = info.get("name").asString()
+        u.email = info.get("email").asString()
         return u
     }
 
     override fun getCallerInfo(): CallerInfo {
-        val auth = SecurityContextHolder.getContext().authentication
+        val auth = SecurityContextHolder.getContext().authentication!!
         logger.debug("principal:${auth.principal} \n\t details:${auth.details}")
         val principal = auth.principal
         val currentCallerInfo = SecurityContext.callerInfo.get()
@@ -122,7 +125,7 @@ class SecuritySvcImpl(
                         userO.get()
                     }
                     val callerInfo = CallerInfo()
-                    val maybeImpersonate = SecurityContext.httpHeaders.get()[CallerInfo.X_IMPERSONATE]
+                    val maybeImpersonate = SecurityContext.getHeader(CallerInfo.X_IMPERSONATE)
                     if(maybeImpersonate != null) {
                         val userSecurable = User()
                         userSecurable.id = maybeImpersonate

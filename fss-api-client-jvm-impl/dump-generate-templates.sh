@@ -14,7 +14,7 @@ USER=$(id -u)
 echo "using openapi definitions located at: $DEFINITIONS"
 docker run --rm  --user=$USER \
   -v ${PWD}:/local \
-  openapitools/openapi-generator-cli:v7.17.0 \
+  openapitools/openapi-generator-cli:v7.19.0 \
   author template \
   -g ${GENERATOR} \
   -o /local/${OUTPUT_DIR}

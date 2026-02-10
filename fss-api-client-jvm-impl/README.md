@@ -4,7 +4,7 @@ API Implementation for client side
 Prerequisites
 ---
 
-Create 'definitions' symlink to the definitions from ema-api project, for example
+Create 'definitions' symlink to the definitions from fss-api project, for example
 if it is a sibling project 
 
 >    ln -s ../fss-api .

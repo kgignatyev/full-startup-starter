@@ -32,7 +32,7 @@ class JobEventSvcImpl(val jobEventsRepo: JobEventsRepo,
     }
 
     @Transactional
-    override fun <S : JobEvent?> save(entity: S & Any): S & Any {
+    override fun <S : JobEvent> save(entity: S ): S  {
         val job = jobRepo.findById(entity.jobId).orElseThrow { IllegalArgumentException("Job not found") }
         //todo: secure operation
         //securitySvc.checkCurrentUserAuthorized(job, CrudEventType.UPDATE)

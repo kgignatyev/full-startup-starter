@@ -7,7 +7,7 @@ import io.temporal.spring.boot.ActivityImpl
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
-import java.util.UUID
+import java.util.*
 
 @Component
 @ActivityImpl( taskQueues = [QUEUE_LEADS_ACQUISITION_WF])

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 
 
 @Component
-class ApiToJobEvent : Converter<V1JobEvent, JobEvent> {
+class ApiToJobEvent : Converter<V1JobEvent, JobEvent?> {
     override fun convert(s: V1JobEvent): JobEvent? {
         val j = JobEvent()
         j.id = s.id
@@ -20,7 +20,7 @@ class ApiToJobEvent : Converter<V1JobEvent, JobEvent> {
 }
 
 @Component
-class JobEvent2Api : Converter<JobEvent, V1JobEvent> {
+class JobEvent2Api : Converter<JobEvent, V1JobEvent?> {
     override fun convert(s: JobEvent): V1JobEvent? {
         val j = V1JobEvent()
         j.id = s.id

@@ -2,14 +2,8 @@ package com.kgignatyev.fss.service.accounts
 
 import com.kgignatyev.fss.service.common.api.APIHelpers.ofOptional
 import com.kgignatyev.fss.service.common.utils.DataUtils.assignIfNotNull
-import com.kgignatyev.fss.service.job.Job
 import com.kgignatyev.fss_svc.api.fsssvc.AccountsServiceV1Api
-import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1Account
-import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1AccountListResult
-import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1AccountUpdateCmd
-import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1JobStatus
-import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1SearchRequest
-import com.kgignatyev.fss_svc.api.fsssvc.v1.model.V1Status
+import com.kgignatyev.fss_svc.api.fsssvc.v1.model.*
 import org.springframework.core.convert.ConversionService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin

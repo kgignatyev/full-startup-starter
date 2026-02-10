@@ -10,7 +10,7 @@ interface SecuritySvc {
     fun ensureCurrentUserIsStored()
     fun getCallerInfo(): CallerInfo
     fun deleteUser(userId: String)
-    fun onCrudEvent(o:Securable,event: CrudEventType)
+    fun onCrudEvent(o:Securable,eventType: CrudEventType)
     fun isCurrentUserAuthorized( o: Securable, action: String): Boolean
     @Throws(UnauthorizedException::class)
     fun checkCurrentUserAuthorized( o: Securable, action: String)

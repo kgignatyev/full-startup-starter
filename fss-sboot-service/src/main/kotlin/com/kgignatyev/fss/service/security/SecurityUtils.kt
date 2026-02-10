@@ -1,6 +1,6 @@
 package com.kgignatyev.fss.service.security
 
-import com.kgignatyev.fss.service.security.svc.SecurityContext
+import com.kgignatyev.fss.service.security.impl.SecurityContext
 
 
 object SecurityUtils {

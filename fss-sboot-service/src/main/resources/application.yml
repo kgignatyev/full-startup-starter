@@ -10,11 +10,18 @@ logging:
 #  pattern:
 #    correlation: [{traceId:-},{spanId:-}]
 
+
+
 spring:
+  main:
+    web-application-type: servlet
+
   application:
       name: fss
-
-
+  cache:
+    type: jcache
+    jcache:
+      config: classpath:ehcache.xml
   jmx:
     enabled: false
 
@@ -41,15 +48,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: jobs
-
-  cache:
-    type: HAZELCAST
-
-
-  hazelcast:
-    config: classpath:hazelcast.xml
-
-
 
   temporal:
     connection:

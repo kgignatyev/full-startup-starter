@@ -1,6 +1,5 @@
 package com.kgignatyev.fss.service.acceptance
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.kgignatyev.fss.service.acceptance.TestsContext.anonymousUser
 import com.kgignatyev.fss.service.acceptance.data.CfgValues
 import com.kgignatyev.fss_svc.api.fss_client.v1.apis.AccountsServiceV1Api
@@ -18,6 +17,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
+import tools.jackson.databind.ObjectMapper
 import java.io.File
 
 object ImpersonationHelper {
@@ -34,7 +34,7 @@ object ImpersonationHelper {
 }
 
 @Component
-class AuthenticationInterceptor(val cfg: CfgValues, val om:ObjectMapper) : Interceptor {
+class AuthenticationInterceptor(val cfg: CfgValues, val om: ObjectMapper) : Interceptor {
 
     val logger: Logger = LoggerFactory.getLogger(this.javaClass)
 
@@ -138,7 +138,7 @@ class FssAPIAccess(val cfg: CfgValues) {
     @Bean
     fun fssApiClient(authenticationInterceptor: AuthenticationInterceptor): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
-//            level = HttpLoggingInterceptor.Level.BODY
+//            level = HttpLoggingInterceptor.Level.HEADERS
             level = HttpLoggingInterceptor.Level.BASIC
         }
         return OkHttpClient.Builder()
