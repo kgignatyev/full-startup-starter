@@ -92,7 +92,8 @@ class SecuritySvcImpl(
     fun getUserInfoFromAuth0():User{
         val restTemplate = RestTemplate()
         val headers = HttpHeaders()
-        val authorizationHeader = SecurityContext.httpHeaders.get()["authorization"]
+        logger.info("Getting user info from Auth0 by thread: ${Thread.currentThread()}")
+        val authorizationHeader = SecurityContext.getHeader("authorization")
             ?: throw IllegalStateException("Authorization header is missing")
         headers.set("authorization", authorizationHeader)
         val r = HttpEntity("", headers)
@@ -124,7 +125,7 @@ class SecuritySvcImpl(
                         userO.get()
                     }
                     val callerInfo = CallerInfo()
-                    val maybeImpersonate = SecurityContext.httpHeaders.get()[CallerInfo.X_IMPERSONATE]
+                    val maybeImpersonate = SecurityContext.getHeader(CallerInfo.X_IMPERSONATE)
                     if(maybeImpersonate != null) {
                         val userSecurable = User()
                         userSecurable.id = maybeImpersonate

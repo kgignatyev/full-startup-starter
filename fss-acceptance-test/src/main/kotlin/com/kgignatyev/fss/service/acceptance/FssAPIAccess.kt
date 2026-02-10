@@ -138,8 +138,8 @@ class FssAPIAccess(val cfg: CfgValues) {
     @Bean
     fun fssApiClient(authenticationInterceptor: AuthenticationInterceptor): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-//            level = HttpLoggingInterceptor.Level.BASIC
+//            level = HttpLoggingInterceptor.Level.HEADERS
+            level = HttpLoggingInterceptor.Level.BASIC
         }
         return OkHttpClient.Builder()
             .addInterceptor(authenticationInterceptor)
